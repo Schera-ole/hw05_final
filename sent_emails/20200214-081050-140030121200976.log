@@ -1,0 +1,26 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: 
+ =?utf-8?b?0KHQsdGA0L7RgSDQv9Cw0YDQvtC70Y8g0L3QsCAxMjcuMC4wLjE6ODAwMA==?=
+From: webmaster@localhost
+To: schera@list.ru
+Date: Fri, 14 Feb 2020 08:10:50 -0000
+Message-ID: <158166785005.1518449.3187113905363220927@nb-112039.devel.ifx>
+
+
+Вы получили это письмо, потому что вы (или кто-то другой) запросили восстановление пароля от учётной записи на сайте 127.0.0.1:8000, которая связана с этим адресом электронной почты.
+
+Пожалуйста, перейдите на эту страницу и введите новый пароль:
+
+http://127.0.0.1:8000/auth/reset/Mw/5dz-761adaf34f2f153327e1/
+
+Your username, in case you’ve forgotten: schera
+
+Спасибо, что используете наш сайт!
+
+Команда сайта 127.0.0.1:8000
+
+
+
+-------------------------------------------------------------------------------
