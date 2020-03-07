@@ -19,8 +19,7 @@ def index(request):
 
 @login_required
 def follow_index(request):
-    follow = Follow.objects.select_related("author", "user").filter(user=request.user)
-    author_list = [favorite.author for favorite in follow]
+    author_list = Follow.objects.filter(user=request.user).values_list('author')
     post_list = Post.objects.filter(author__in=author_list).order_by("-pub_date")
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get("page")
@@ -172,9 +171,9 @@ def profile_follow(request, username):
     if request.user.username != username:
         follower = User.objects.get(username=request.user.username)
         following = User.objects.get(username=username)
-        if Follow.objects.filter(user=follower, author=following).count() == 0:
+        already_follows = Follow.objects.filter(user=follower, author=following).exists()
+        if not already_follows:
             Follow.objects.create(user=follower, author=following)
-            return redirect("profile", username=username)
     return redirect("profile", username=username)
 
 

@@ -149,7 +149,7 @@ class Image(TestCase):
         )
 
     def test_image(self):
-        with open("media/posts/tmlfrOv5Iz4.jpg", "rb") as fp:
+        with open("posts/fixtures/tmlfrOv5Iz4.jpg", "rb") as fp:
             self.client.post(
                 "/new/", {"group": self.group.pk, "text": "Ping", "image": fp}
             )
@@ -163,7 +163,7 @@ class Image(TestCase):
         self.assertContains(response, "<img ", status_code=200)
 
     def test_image_upload(self):
-        with open("media/posts/to-do.txt", "rb") as fp:
+        with open("posts/fixtures/to-do.txt", "rb") as fp:
             response = self.client.post(
                 "/new/", {"group": self.group.pk, "text": "to-do", "image": fp}
             )
@@ -194,12 +194,26 @@ class Subscription(TestCase):
         self.client.force_login(self.follower)
         self.post = Post.objects.create(text="Test subscribe", author=self.following)
         response = self.client.get(f"/{self.following}/follow/")
-        self.assertEqual(response.status_code, 302)
-        response = Follow.objects.filter(user=self.follower)
+        self.assertRedirects(
+            response,
+            f"/{self.following}/",
+            status_code=302,
+            target_status_code=200,
+            msg_prefix="",
+            fetch_redirect_response=True,
+        )
+        response = Follow.objects.filter(user=self.follower).exists()
         self.assertTrue(response)
         response = self.client.get(f"/{self.following}/unfollow/")
-        self.assertEqual(response.status_code, 302)
-        response = Follow.objects.filter(user=self.follower)
+        self.assertRedirects(
+            response,
+            f"/{self.following}/",
+            status_code=302,
+            target_status_code=200,
+            msg_prefix="",
+            fetch_redirect_response=True,
+        )
+        response = Follow.objects.filter(user=self.follower).exists()
         self.assertFalse(response)
 
     def test_post_on_follow_page(self):
@@ -223,7 +237,7 @@ class Subscription(TestCase):
             response, self.text, html=False,
         )
 
-    def test_new_follow(self):
+    def test_comments(self):
         self.text = "Test comments"
         self.post = Post.objects.create(text="Test post", author=self.following)
         response = self.client.post(
