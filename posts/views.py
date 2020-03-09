@@ -6,8 +6,6 @@ from django.contrib.auth.decorators import login_required
 import datetime as dt
 from django.urls import reverse
 
-# Create your views here
-
 
 def index(request):
     post_list = Post.objects.prefetch_related("author").order_by("-pub_date").all()
@@ -57,7 +55,6 @@ def new_post(request):
 
 
 def profile(request, username):
-    # тут тело функции
     user_profile = get_object_or_404(User, username=username)
     post_all = (
         Post.objects.prefetch_related("author")
@@ -94,7 +91,6 @@ def profile(request, username):
 
 
 def post_view(request, username, post_id):
-    # тут тело функции
     user_profile = get_object_or_404(User, username=username)
     post_count = (
         Post.objects.prefetch_related("author").filter(author=user_profile).count()
@@ -131,10 +127,6 @@ def add_comment(request, username, post_id):
 
 
 def post_edit(request, username, post_id):
-    # тут тело функции. Не забудьте проверить,
-    # что текущий пользователь — это автор записи.
-    # В качестве шаблона используйте шаблон для создания новой записи,
-    # который вы использовали раньше (вы могли назвать шаблон иначе)
     post = get_object_or_404(Post, pk=post_id)
     if request.user != post.author:
         return redirect(
@@ -157,8 +149,6 @@ def post_edit(request, username, post_id):
 
 
 def page_not_found(request, exception):
-    # Переменная exception содержит отладочную информацию,
-    # выводить её в шаблон пользователской страницы 404 мы не станем
     return render(request, "misc/404.html", {"path": request.path}, status=404)
 
 

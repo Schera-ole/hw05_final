@@ -5,8 +5,6 @@ from django.urls import reverse
 from django.core.cache import cache
 from django.core.cache.utils import make_template_fragment_key
 
-# Create your tests here.
-
 
 class CreateProfile(TestCase):
     def setUp(self):
